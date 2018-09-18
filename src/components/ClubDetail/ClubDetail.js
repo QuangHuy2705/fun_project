@@ -42,7 +42,14 @@ class ClubDetail extends Component {
 			<div className="container mt-5">
 				<div className="row">
 					<div className="col-md-3 col-sm-12">
-						<Map location={location}/>
+						<Map 
+							location={location} 
+							isMarkerShown
+							googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyBnGw4IYXgy1Rn0_04-Safo9oGqMqGETRM"
+							loadingElement={<div style={{ height: `100%` }} />}
+							containerElement={<div style={{ height: `50vh` }} />}
+							mapElement={<div style={{ height: `100%` }} />}
+						/>
 					</div>
 					<div className="col-md-9 col-sm-12">
 						<Detail />

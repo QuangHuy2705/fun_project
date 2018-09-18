@@ -1,34 +1,20 @@
 import React, {Component} from "react";
-import GoogleMapReact from "google-map-react";
+import {withScriptjs, withGoogleMap, GoogleMap, Marker} from "react-google-maps";
+import Pin from "../Pin/Pin";
 
-const Any = props => (<h4>a</h4>)
 
-class Map extends Component {
-	constructor(props) {
-		super(props);
+const Map = withScriptjs(withGoogleMap((props) => {
+	if(props.location.lat === "") {
+		return (<h2>no</h2>)
 	}
-	render() {
-		const {location} = this.props;
-		console.log(location);
-		if(location.lat === "") {
-			return (
-				<h1>no</h1>
-			)
-		} 
-		return (
-			<div style={{height: "50vh", width: "100%"}}>
-				<GoogleMapReact
-					bootstrapURLKeys={"AIzaSyBnGw4IYXgy1Rn0_04-Safo9oGqMqGETRM"} 
-					center={location}
-					defaultZoom={12}
-				>
-					<Any lat={this.props.location.lat}
-						lng={this.props.location.lng}
-					/>
-				</GoogleMapReact>
-			</div>
-		)
-	}
-};
+	return (
+		<GoogleMap
+			defaultZoom={13}
+			defaultCenter={props.location}
+		>
+			{props.isMarkerShown && (<Marker position={props.location} />)}
+		</GoogleMap>
+	)
+}));
 
 export default Map;
