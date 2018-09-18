@@ -1,0 +1,11 @@
+.card-img-top {
+	height: 200px;
+}
+
+.card a {
+	color: #333;
+}
+
+.card a:hover {
+	text-decoration: underline;
+}

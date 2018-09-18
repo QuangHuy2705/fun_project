@@ -1,0 +1,1 @@
+export const LOAD_CLUBS = "LOAD_CLUBS";
