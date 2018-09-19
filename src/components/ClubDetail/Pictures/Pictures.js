@@ -10,25 +10,40 @@ class Pictures extends Component {
 		}
 	}
 
-	componentDidMount() {
-
+	componentDidUpdate(prevProps) {
+	  // Typical usage (don't forget to compare props):
+	  if (this.props !== prevProps) {
+	    const {photos } = this.props;
+	    let newState = new Array();
+	    photos.forEach(photo => {
+	    	apiCall("get", `https://maps.googleapis.com/maps/api/place/photo?maxheight=250&minwidth=300&photoreference=${photo.photo_reference}&key=AIzaSyBnGw4IYXgy1Rn0_04-Safo9oGqMqGETRM`)
+	    		.then(res => {
+	    				this.setState(prevState => ({images: [...prevState.images, res.config.url]}))
+	    			}).catch(err => console.log(err))
+	    });
+	  }
 	}
 
 	render() {
+		const {images} = this.state;
+		console.log(images);
+		if(this.state.images.length === 0) {
+			return <div><h1>No</h1></div>
+		}
 		return (
 			<div style={{maxHeight: "400px"}} className="row">
 				<div className="col-9">
-					<img style={{height: '100%'}} className="img-fluid" src="https://upload.wikimedia.org/wikipedia/en/thumb/6/63/IMG_%28business%29.svg/1200px-IMG_%28business%29.svg.png" alt=""/>
+					<img style={{height: '100%'}} className="img-fluid" src={`${images[0]}`} alt=""/>
 				</div>
-				<div className="col-3">
-					<div  class="row align-items-start">
-						<img className="img-fluid detailImage" src="http://www.apicius.es/wp-content/uploads/2012/07/IMG-20120714-009211.jpg" alt=""/>
+				<div style={{height: '100%'}} className="col-3 d-flex flex-column justify-content-between">
+					<div>
+						<img className="img-fluid detailImage" src={`${images[1]}`} alt=""/>
 					</div>
-					<div  class="row align-items-start">
-						<img style={{margin: "2px 0 2px 0"}} className="img-fluid detailImage" src="http://www.apicius.es/wp-content/uploads/2012/07/IMG-20120714-009211.jpg" alt=""/>	
+					<div>
+						<img style={{margin: "2px 0 2px 0"}} className="img-fluid detailImage" src={`${images[2]}`} alt=""/>	
 					</div>
-					<div  class="row align-items-start">
-						<img className="img-fluid detailImage" src="http://www.apicius.es/wp-content/uploads/2012/07/IMG-20120714-009211.jpg" alt=""/>
+					<div>
+						<img className="img-fluid detailImage" src={`${images[3]}`} alt=""/>
 					</div>
 				</div>				
 			</div>

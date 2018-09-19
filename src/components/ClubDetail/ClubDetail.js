@@ -17,7 +17,8 @@ class ClubDetail extends Component {
 			name: "",
 			phoneNumber: "",
 			rating: "",
-			price_level: ""
+			price_level: "",
+			photos: []
 		}
 	}
 
@@ -25,7 +26,7 @@ class ClubDetail extends Component {
 		const {club_id} = this.props.match.params;
 		apiCall("get", `https://maps.googleapis.com/maps/api/place/details/json?placeid=${club_id}&fields=place_id,price_level,geometry,name,photo,rating,formatted_phone_number,formatted_address,url,review&key=AIzaSyBnGw4IYXgy1Rn0_04-Safo9oGqMqGETRM`)
 			.then(res => {
-				const {formatted_address, price_level, place_id, geometry, name, rating, reviews, formatted_phone_number} = res.data.result;
+				const {formatted_address, price_level, geometry, name, rating, reviews, formatted_phone_number, photos} = res.data.result;
 				console.log(res);
 				this.setState({
 					location: geometry.location,
@@ -35,13 +36,13 @@ class ClubDetail extends Component {
 					rating,
 					name,
 					price_level,
-					placeId: place_id
+					photos
 				})
 			});
 		}
 
 	render() {
-		const {location, reviews, address, name, phoneNumber, rating, price_level, placeId} = this.state; 
+		const {location, reviews, address, name, phoneNumber, rating, price_level, photos} = this.state; 
 		return (
 			<div className="container mt-5">
 				<div className="row">
@@ -57,7 +58,7 @@ class ClubDetail extends Component {
 						/>
 					</div>
 					<div  className="col-md-9 col-sm-12">
-						<Pictures placeId={placeId}/>
+						<Pictures photos={photos}/>
 					</div>
 				</div>
 			</div>
