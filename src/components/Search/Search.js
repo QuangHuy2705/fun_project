@@ -1,6 +1,4 @@
 import React, {Component} from "react";
-import {connect} from "react-redux";
-import {fetchClubs} from "../../store/actions/clubs";
 import AutoComplete from "../AutoComplete/AutoComplete";
 
 class Search extends Component {
