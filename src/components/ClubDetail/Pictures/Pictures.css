@@ -1,3 +1,5 @@
 .detailImage {
-	max-height: 133px
+	max-height: 133px;
+	height: 100%;
+	width: 100%;
 }

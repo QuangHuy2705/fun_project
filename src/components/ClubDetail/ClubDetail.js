@@ -3,6 +3,7 @@ import Map from "./Map/Map";
 import Pictures from "./Pictures/Pictures";
 import {apiCall} from "../../services/apiCall";
 import Info from "./Info/Info";
+import Reviews from "./Reviews/Reviews";
 
 class ClubDetail extends Component {
 	constructor(props) {
@@ -18,15 +19,16 @@ class ClubDetail extends Component {
 			phoneNumber: "",
 			rating: "",
 			price_level: "",
-			photos: []
+			photos: [],
+			opening_hours: ""
 		}
 	}
 
 	componentDidMount() {
 		const {club_id} = this.props.match.params;
-		apiCall("get", `https://maps.googleapis.com/maps/api/place/details/json?placeid=${club_id}&fields=place_id,price_level,geometry,name,photo,rating,formatted_phone_number,formatted_address,url,review&key=AIzaSyBnGw4IYXgy1Rn0_04-Safo9oGqMqGETRM`)
+		apiCall("get", `https://maps.googleapis.com/maps/api/place/details/json?placeid=${club_id}&fields=place_id,price_level,geometry,name,photo,opening_hours,rating,formatted_phone_number,formatted_address,url,review&key=AIzaSyBnGw4IYXgy1Rn0_04-Safo9oGqMqGETRM`)
 			.then(res => {
-				const {formatted_address, price_level, geometry, name, rating, reviews, formatted_phone_number, photos} = res.data.result;
+				const {formatted_address, price_level, geometry, name, opening_hours, rating, reviews, formatted_phone_number, photos} = res.data.result;
 				console.log(res);
 				this.setState({
 					location: geometry.location,
@@ -36,18 +38,19 @@ class ClubDetail extends Component {
 					rating,
 					name,
 					price_level,
-					photos
+					photos,
+					opening_hours
 				})
 			});
 		}
 
 	render() {
-		const {location, reviews, address, name, phoneNumber, rating, price_level, photos} = this.state; 
+		const {location, reviews, address, name, phoneNumber, rating, price_level, photos, opening_hours} = this.state; 
 		return (
 			<div className="container mt-5">
 				<div className="row">
 					<div className="col-md-3 col-sm-12">
-						<Info name={name} rating={rating} address={address} phoneNumber={phoneNumber} priceLevel={price_level}/>
+						<Info opening_hours={opening_hours} name={name} rating={rating} address={address} phoneNumber={phoneNumber} priceLevel={price_level}/>
 						<Map
 							location={location} 
 							isMarkerShown
@@ -57,8 +60,9 @@ class ClubDetail extends Component {
 							mapElement={<div style={{ height: `100%` }} />}
 						/>
 					</div>
-					<div  className="col-md-9 col-sm-12">
+					<div  className="col-md-9 col-sm-12 mt-3">
 						<Pictures photos={photos}/>
+						<Reviews reviews={reviews} />
 					</div>
 				</div>
 			</div>

@@ -38,19 +38,15 @@ class LocationSearchInput extends React.Component {
         onSelect={this.handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div className="mx-auto" style={{maxWidth: "30%"}}>
+          <div className="mx-auto" >
             <form onSubmit={this.handleSubmit} className="form-inline ">
-              <div className="form-group">
-                <input
+                <input style={{maxWidth: "70%"}}
                   {...getInputProps({
                     placeholder: 'Enter your location',
                     className: 'location-search-input form-control',
                   })}
                 />
-                </div>
-              <div className="form-group">
-                <button type="submit" className="btn btn-primary ml-1 form-control"> Search</button>
-              </div>
+                <button type="submit" className="btn btn-primary ml-1 "> Search</button>
             </form>
             <div className="autocomplete-dropdown-container">
               {loading && <div>Loading...</div>}

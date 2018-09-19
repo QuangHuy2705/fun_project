@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import "./Pictures.css";
 import {apiCall} from "../../../services/apiCall";
+import {Link} from "react-router-dom";
+import Spinner from "../../Spinner/Spinner";
 
 class Pictures extends Component {
 	constructor(props) {
@@ -26,21 +28,26 @@ class Pictures extends Component {
 
 	render() {
 		const {images} = this.state;
-		console.log(images);
 		if(this.state.images.length === 0) {
-			return <div><h1>No</h1></div>
+			return (
+				<div className="row">
+					<div className="col-12 text-center">
+						<Spinner />
+					</div>
+				</div>
+			)
 		}
 		return (
 			<div style={{maxHeight: "400px"}} className="row">
 				<div className="col-9">
-					<img style={{height: '100%'}} className="img-fluid" src={`${images[0]}`} alt=""/>
+					<img style={{height: '100%', width: "100%"}} className="img-fluid" src={`${images[0]}`} alt=""/>
 				</div>
-				<div style={{height: '100%'}} className="col-3 d-flex flex-column justify-content-between">
+				<div className="col-3 d-flex flex-column justify-content-between">
 					<div>
 						<img className="img-fluid detailImage" src={`${images[1]}`} alt=""/>
 					</div>
 					<div>
-						<img style={{margin: "2px 0 2px 0"}} className="img-fluid detailImage" src={`${images[2]}`} alt=""/>	
+						<img className="img-fluid detailImage" src={`${images[2]}`} alt=""/>	
 					</div>
 					<div>
 						<img className="img-fluid detailImage" src={`${images[3]}`} alt=""/>
